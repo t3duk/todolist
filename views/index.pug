@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Todo List
+        link(rel="stylesheet", href="/style.css")
+    body.bg-neutral-900
+        div.m-4.rounded-xl.flex.items-center.mt-8.justify-center
+            div.bg-neutral-700.rounded-xl(class="max-w-64")
+                h1.text-4xl.text-white.font-bold.m-2.text-center Todo List
+                ol.text-white
+                    each todo in todos
+                        ul.bg-neutral-800.rounded-xl.p-2.m-2
+                            li.m-1.text-2xl= todo.title
+                            li.m-1.text-lg= todo.description
+                            //- create a div to hold two links to edit and delete
+                            div.my-3
+                                //- create a link to delete the todo
+                                a.m-1.bg-blue-500.py-2.px-4.rounded-xl.transition-all(class="hover:bg-blue-600", href="/todos/delete/" + todo.id) Complete
+                        p
+                //- create an input to add a new todo
+                //- create a form which will send a post request to /todos/add
+                form.m-1(method="POST", action="/todos/add")
+                    input.text-white.m-1.bg-neutral-800.rounded-xl.py-2.px-4.placeholder-neutral-500(name="title", type="text", placeholder="Title")
+                    input.text-white.m-1.bg-neutral-800.rounded-xl.py-2.px-4.placeholder-neutral-500(name="description", type="text", placeholder="Description")
+                    button.m-1.bg-blue-500.rounded-xl.py-2.px-4.text-white.transition-all(class="hover:bg-blue-600", type="submit") Add Todo

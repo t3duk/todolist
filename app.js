@@ -28,8 +28,37 @@ app.set('view engine', 'pug');
 
 // Routes
 
+let todoList = {
+    "1": {
+        "id": 1,
+        "title": "First todo",
+        "description": "This is the first todo",
+    },
+};
+
 app.get('/', (req, res) => {
-    res.send("Hello World!");
+    res.render("index", {todos: todoList});
+});
+
+app.get('/todos/delete/:id', (req, res) => {
+    delete todoList[req.params.id];
+    res.redirect('/');
+});
+
+app.post('/todos/add', (req, res) => {
+
+    // check if the todo title and description are empty
+    if (req.body.title === "" || req.body.description === "") {
+        res.redirect('/');
+    } else {
+        let id = Math.floor(Math.random() * 1000000);
+        todoList[id] = {
+            "id": id,
+            "title": req.body.title,
+            "description": req.body.description,
+        };
+        res.redirect('/');
+    }
 });
 
 app.listen(process.env.PORT, () => {
